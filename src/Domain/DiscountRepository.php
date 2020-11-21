@@ -2,12 +2,12 @@
 
 namespace App\Domain;
 
-use App\Domain;
-
 interface DiscountRepository
 {
     /**
      * @return Discount[]
      */
     public function findAll(): array;
+
+    public function byId(int $id): Discount;
 }

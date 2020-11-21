@@ -31,37 +31,42 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
 
-<!--        <div class="card mb-4 shadow-sm">-->
-<!--            <div class="card-header">-->
-<!--                <h4 class="my-0 font-weight-normal">Pro</h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--                <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>-->
-<!--                <ul class="list-unstyled mt-3 mb-4">-->
-<!--                    <li>20 users included</li>-->
-<!--                    <li>10 GB of storage</li>-->
-<!--                    <li>Priority email support</li>-->
-<!--                    <li>Help center access</li>-->
-<!--                </ul>-->
-<!--                <button type="button" class="btn btn-lg btn-block btn-primary">Get started</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="card mb-4 shadow-sm">-->
-<!--            <div class="card-header">-->
-<!--                <h4 class="my-0 font-weight-normal">Enterprise</h4>-->
-<!--            </div>-->
-<!--            <div class="card-body">-->
-<!--                <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>-->
-<!--                <ul class="list-unstyled mt-3 mb-4">-->
-<!--                    <li>30 users included</li>-->
-<!--                    <li>15 GB of storage</li>-->
-<!--                    <li>Phone and email support</li>-->
-<!--                    <li>Help center access</li>-->
-<!--                </ul>-->
-<!--                <button type="button" class="btn btn-lg btn-block btn-primary">Contact us</button>-->
-<!--            </div>-->
-<!--        </div>-->
+    <div class="card-deck mb-3 text-center">
+        <h6 class="border-bottom border-gray pb-2 mb-0">Shopping cart</h6>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cartSku in cart.skus %}
+                <tr>
+                    <td>{{ cartSku.name }}</td>
+                    <td>${{ cartSku.price }}</td>
+                </tr>
+            {% endfor %}
+
+
+            {% for cartDiscount in cart.discounts %}
+            <tr>
+                <td>{{ cartDiscount.name }}</td>
+                <td class="text-danger">- ${{ cartDiscount.amount }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td class="text-primary">Total</td>
+                <td class="text-primary">${{ cart.total }}</td>
+            </tr>
+        </table>
+
+        <small class="d-block text-right mt-3">
+            <a type="button" href="/cart?clear=true">Empty your cart</a>
+        </small>
+
     </div>
 
 {% include 'footer.html' %}

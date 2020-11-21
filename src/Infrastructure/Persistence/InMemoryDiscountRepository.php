@@ -6,6 +6,7 @@ namespace App\Infrastructure\Persistence;
 use App\Domain\Discount;
 use App\Domain\DiscountRepository;
 use App\Domain\DiscountRule;
+use App\Domain\DomainException\DiscountNotFoundException;
 
 class InMemoryDiscountRepository implements DiscountRepository
 {
@@ -17,14 +18,25 @@ class InMemoryDiscountRepository implements DiscountRepository
     public function __construct(array $discounts = null)
     {
         $this->discounts = $discounts ?? [
-                new Discount('3A for $130', 30, new DiscountRule(0, 'A', 3)),
-                new Discount('2B for $130', 15, new DiscountRule(0, 'B', 2)),
-                new Discount('$10 of total $200', 10, new DiscountRule(200)),
+                0 => new Discount('3A for $130', 30, new DiscountRule(0, 'A', 3)),
+                1 => new Discount('2B for $130', 15, new DiscountRule(0, 'B', 2)),
+                2 => new Discount('$10 of total $200', 10, new DiscountRule(200)),
             ];
     }
 
     public function findAll(): array
     {
         return array_values($this->discounts);
+    }
+    /**
+     * @throws DiscountNotFoundException
+     */
+    public function byId(int $id): Discount
+    {
+        if (!isset($this->discounts[$id])) {
+            throw new DiscountNotFoundException();
+        }
+
+        return $this->discounts[$id];
     }
 }

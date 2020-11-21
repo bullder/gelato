@@ -3,12 +3,13 @@
 namespace App\Application\Actions;
 
 use App\Domain\DiscountRepository;
+use App\Domain\ShoppingCart;
 use App\Domain\SkuRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 use Slim\Views\Twig;
 
-class Cart extends Action
+class ActionCart extends Action
 {
     protected DiscountRepository $discountRepository;
     protected SkuRepository $skuRepository;
@@ -29,10 +30,19 @@ class Cart extends Action
             $this->request->getAttribute('session');
         }
 
+        $cart = new ShoppingCart();
+        $cart->addSku($this->skuRepository->byId('A'));
+        $cart->addSku($this->skuRepository->byId('A'));
+        $cart->addSku($this->skuRepository->byId('A'));
+        $cart->addSku($this->skuRepository->byId('B'));
+        $cart->addSku($this->skuRepository->byId('C'));
+        $cart->addSku($this->skuRepository->byId('D'));
+        $cart->addDiscount($this->discountRepository->byId(2));
+        $cart->getTotal();
+
         return Twig::fromRequest($this->request)->render($this->response, 'index.html', [
-            'name' => '',
             'skus' => $this->skuRepository->findAll(),
-            'discounts' => $this->discountRepository->findAll(),
+            'cart' => $cart,
         ]);
     }
 }
