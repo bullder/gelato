@@ -27,23 +27,27 @@ class ShoppingCart
         return $this->increaseQuantityForSkuItem($sku);
     }
 
-    public function hasSkuItem(Sku $sku): bool
+    public function getItemBySku(string $sku): ?Item
     {
         foreach ($this->items as $item) {
-            if ($item->sku->name === $sku->name) {
-                return true;
+            if ($item->sku->name === $sku) {
+                return $item;
             }
         }
 
-        return false;
+        return null;
+    }
+
+    public function hasSkuItem(Sku $sku): bool
+    {
+        return null !== $this->getItemBySku($sku->name);
     }
 
     public function increaseQuantityForSkuItem(Sku $sku): ShoppingCart
     {
-        foreach ($this->items as $item) {
-            if ($item->sku->name === $sku->name) {
-                $item->addQuantity();
-            }
+        $item = $this->getItemBySku($sku->name);
+        if ($item) {
+            $item->addQuantity();
         }
 
         return $this;
@@ -56,7 +60,7 @@ class ShoppingCart
         return $this;
     }
 
-    public function getTotal(): int
+    public function updateTotal(): void
     {
         $this->total = 0;
         foreach ($this->items as $item) {
@@ -66,6 +70,11 @@ class ShoppingCart
         foreach ($this->discounts as $discount) {
             $this->total -= $discount->amount;
         }
+    }
+
+    public function getTotal(): int
+    {
+        $this->updateTotal();
 
         return $this->total;
     }

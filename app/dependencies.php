@@ -1,12 +1,17 @@
 <?php
 declare(strict_types=1);
 
+use App\Infrastructure\Service\CheckoutBuilder;
+use App\Infrastructure\Service\CheckoutBuilderInterface;
+use App\Infrastructure\Service\ShoppingCartProcessor;
+use App\Infrastructure\Service\ShoppingCartProcessorInterface;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use function DI\autowire;
 
 return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
@@ -24,5 +29,10 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
+    ]);
+
+    $containerBuilder->addDefinitions([
+        ShoppingCartProcessorInterface::class => autowire(ShoppingCartProcessor::class),
+        CheckoutBuilderInterface::class => autowire(CheckoutBuilder::class),
     ]);
 };
