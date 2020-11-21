@@ -39,26 +39,27 @@
             <thead>
             <tr>
                 <th scope="col">Item</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
             </tr>
             </thead>
             <tbody>
-            {% for cartSku in cart.skus %}
+            {% for item in cart.items %}
                 <tr>
-                    <td>{{ cartSku.name }}</td>
-                    <td>${{ cartSku.price }}</td>
+                    <td>{{ item.sku.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.total }}</td>
                 </tr>
             {% endfor %}
 
-
             {% for cartDiscount in cart.discounts %}
             <tr>
-                <td>{{ cartDiscount.name }}</td>
+                <td colspan="2">{{ cartDiscount.name }}</td>
                 <td class="text-danger">- ${{ cartDiscount.amount }}</td>
             </tr>
             {% endfor %}
             <tr>
-                <td class="text-primary">Total</td>
+                <td colspan="2" class="text-primary">Total</td>
                 <td class="text-primary">${{ cart.total }}</td>
             </tr>
         </table>

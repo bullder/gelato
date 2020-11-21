@@ -7,24 +7,44 @@ class ShoppingCart
     public int $total = 0;
 
     /**
-     * @var Sku[]
+     * @var Item[]
      */
-    public array $skus;
+    public array $items = [];
 
     /**
      * @var Discount[]
      */
-    public array $discounts;
-
-    public function __construct(array $skus = [], array $discounts = [])
-    {
-        $this->skus = $skus;
-        $this->discounts = $discounts;
-    }
+    public array $discounts = [];
 
     public function addSku(Sku $sku): ShoppingCart
     {
-        $this->skus[] = $sku;
+        if (!$this->hasSkuItem($sku)) {
+            $this->items[] = new Item($sku);
+
+            return $this;
+        }
+
+        return $this->increaseQuantityForSkuItem($sku);
+    }
+
+    public function hasSkuItem(Sku $sku): bool
+    {
+        foreach ($this->items as $item) {
+            if ($item->sku->name === $sku->name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function increaseQuantityForSkuItem(Sku $sku): ShoppingCart
+    {
+        foreach ($this->items as $item) {
+            if ($item->sku->name === $sku->name) {
+                $item->addQuantity();
+            }
+        }
 
         return $this;
     }
@@ -39,8 +59,8 @@ class ShoppingCart
     public function getTotal(): int
     {
         $this->total = 0;
-        foreach ($this->skus as $sku) {
-            $this->total += $sku->price;
+        foreach ($this->items as $item) {
+            $this->total += $item->getTotal();
         }
 
         foreach ($this->discounts as $discount) {
