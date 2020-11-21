@@ -4,20 +4,19 @@
 namespace App\Infrastructure\Persistence;
 
 use App\Domain\Discount;
+use App\Domain\DiscountRepository;
 use App\Domain\DiscountRule;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
 
-class InMemoryDiscountRepository
+class InMemoryDiscountRepository implements DiscountRepository
 {
     /**
      * @var Discount[]
      */
     private array $discounts;
 
-    public function __construct(array $users = null)
+    public function __construct(array $discounts = null)
     {
-        $this->discounts = $users ?? [
+        $this->discounts = $discounts ?? [
                 new Discount('3A for $130', 30, new DiscountRule(0, 'A', 3)),
                 new Discount('2B for $130', 15, new DiscountRule(0, 'B', 2)),
                 new Discount('$10 of total $200', 10, new DiscountRule(200)),
