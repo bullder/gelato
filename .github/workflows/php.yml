@@ -35,3 +35,15 @@ jobs:
 
     - name: Run phpstan
       run: composer run-script phpstan
+
+    - name: Setup PHP Action
+      uses: shivammathur/setup-php@1.8.2
+      with:
+        php-version: "${{ matrix.php-versions }}"
+        coverage: pcov
+
+    - name: Gather coverage
+      run: "vendor/bin/phpunit --coverage-clover=coverage.xml"
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
