@@ -4,7 +4,7 @@ namespace App\Domain;
 
 class ShoppingCart
 {
-    public const SLUG_TEMPLATE = '/cart?skus=%s';
+    public const SLUG_TEMPLATE = '/?skus=%s';
 
     public int $total = 0;
 

@@ -44,28 +44,36 @@
             </tr>
             </thead>
             <tbody>
-            {% for item in view.cart.items %}
+            {% if view.cart.items|length > 0 %}
+                {% for item in view.cart.items %}
                 <tr>
                     <td>{{ item.sku.name }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>${{ item.total }}.00</td>
                 </tr>
-            {% endfor %}
+                {% endfor %}
 
-            {% for cartDiscount in view.cart.discounts %}
+                {% for cartDiscount in view.cart.discounts %}
+                <tr>
+                    <td>Discount</td>
+                    <td>{{ cartDiscount.name }}</td>
+                    <td class="text-danger">- ${{ cartDiscount.amount }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td class="text-primary">Total</td>
+                    <td class="text-primary">${{ view.cart.total }}.00</td>
+                </tr>
+            {% else %}
             <tr>
-                <td colspan="2">{{ cartDiscount.name }}</td>
-                <td class="text-danger">- ${{ cartDiscount.amount }}</td>
+                <td colspan="3">Your cart is empty</td>
             </tr>
-            {% endfor %}
-            <tr>
-                <td colspan="2" class="text-primary">Total</td>
-                <td class="text-primary">${{ view.cart.total }}.00</td>
-            </tr>
+            {% endif %}
         </table>
 
         <small class="d-block text-right mt-3">
-            <a type="button" class="btn btn-info" href="/cart">Empty your cart</a>
+            <a type="button" class="btn btn-info" href="/">Empty your cart</a>
         </small>
 
     </div>
