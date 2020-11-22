@@ -7,6 +7,13 @@ I decided to try for this task slim framework because I never used it before and
 
 Also task is deployed on heroku [https://supergelato.herokuapp.com/?skus=A,A,B,C,D](https://supergelato.herokuapp.com/?skus=A,A,B,C,D). As soon as its on the free dyno first request might be slight slow.
 
+If you would like to launch it local feel free to use
+
+```shell
+docker run -d -p 80:80 bullder/gelato:latest
+```
+
+# Questions
 
 > 1. How would you implement rules like “10% off the total if you spend over $200”
 
