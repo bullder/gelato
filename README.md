@@ -1,42 +1,37 @@
-# Slim Framework 4 Skeleton Application
+[![codecov](https://codecov.io/gh/bullder/gelato/branch/master/graph/badge.svg?token=B2V2IE906G)](https://codecov.io/gh/bullder/gelato)
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+[![CI/CD Pipeline](https://github.com/bullder/gelato/workflows/unit/badge.svg)](https://github.com/bullder/gelato/workflows/unit/badge.svg)
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+I decided to try for this task slim framework because I never used it before and looks like its good opportunity to try it.
 
-## Install the Application
+Also task is deployed on heroku [https://supergelato.herokuapp.com/?skus=A,A,B,C,D](https://supergelato.herokuapp.com/?skus=A,A,B,C,D). As soon as its on the free dyno first request might be slight slow.
 
-Run this command from the directory in which you want to install your new Slim Framework application.
 
-```bash
-composer create-project slim/slim-skeleton [my-app-name]
-```
+> 1. How would you implement rules like “10% off the total if you spend over $200”
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+I would implement an additional attribute to [Discount](https://github.com/bullder/gelato/blob/master/src/Domain/Discount.php) which will be treated not as absolute value but percentage of total  
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
+> 2. How would you handle multiple same SKU rules?
 
-To run the application in development, you can run these commands 
+Instead of having just a simple relation to SKU [DiscountRule](https://github.com/bullder/gelato/blob/master/src/Domain/DiscountRule.php) will have set of SKUs    
 
-```bash
-cd [my-app-name]
-composer start
-```
+> * How would you scale this?
 
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
+For now, I don't think that this task is complex enough might be if I would have some details I notice some bottlenecks, but it seems simple enough for scaling 
 
-Run this command in the application directory to run the test suite
+> * How would you deal with 1000’s of rules?
 
-```bash
-composer test
-```
+Computation of this task is low enough to not carry about having just 1000's rules
 
-That's it! Now go build something cool.
+* How do you make this fault tolerant?
+
+None of external services is involved I have no idea how simple matching and summarizing might be faulty. I have more concerns about having conflict in complex cases like if we have some discount in absolute and relative value which should be applied at first. 
+
+> * How do you make this operation friendly?
+
+Seems like initial business requirement was not set properly. More common way to use discount is having special promo code which is activating some special discount. That is the way how it is possible to measure marketing channels and customer engagement. With described logic we might have very tricky conflicts which might occur bigger than expected discount and validate all combinations of discount is NP-completeness problem
+
+> * Do you need any diagrams to help you convey the solution?
+
+Not sure about this question

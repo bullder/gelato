@@ -46,9 +46,19 @@ class CheckoutBuilderTest extends TestCase
                 130,
                 1
             ],
+            '6A for $130 discount and extra 10 off' => [
+                'A,A,A,A,A,A',
+                250,
+                1
+            ],
             '2B for $45' => [
                 'B,B',
                 45,
+                1
+            ],
+            '4B for $45' => [
+                'B,B,B,B',
+                90,
                 1
             ],
             '$10 of total $200' => [

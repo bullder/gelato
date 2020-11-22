@@ -24,26 +24,30 @@ class ShoppingCartProcessor implements ShoppingCartProcessorInterface
         $cart->updateTotal();
 
         foreach ($this->discounts as $discount) {
-            if ($this->isApplicable($discount, $cart)) {
+            $isApplicable = $this->isApplicable($discount, $cart);
+            while ($isApplicable > 0) {
                 $cart->addDiscount($discount);
                 $cart->updateTotal();
+                $isApplicable--;
             }
         }
 
         return $cart;
     }
 
-    private function isApplicable(Discount $discount, ShoppingCart $cart): bool
+    private function isApplicable(Discount $discount, ShoppingCart $cart): int
     {
-        if (null === $discount->rule->sku) {
-            return $cart->getTotal() >= $discount->rule->total;
+        if (null === $discount->rule->sku && $cart->getTotal() >= $discount->rule->total) {
+            return 1;
         }
 
-        $discountedItem = $cart->getItemBySku($discount->rule->sku);
-        if ($discountedItem) {
-            return $discountedItem->quantity >= $discount->rule->quantity;
+        if ($discount->rule->sku) {
+            $discountedItem = $cart->getItemBySku($discount->rule->sku);
+            if ($discountedItem && $discountedItem->quantity >= $discount->rule->quantity) {
+                return intdiv($discountedItem->quantity, $discount->rule->quantity);
+            }
         }
 
-        return false;
+        return 0;
     }
 }
