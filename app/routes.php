@@ -15,6 +15,8 @@ return function (App $app) {
         return $response;
     });
 
+    $app->redirect('/', '/cart');
+
     $app->group('/cart', function  (Group $group) {
         $group->get('', ActionCart::class);
     });

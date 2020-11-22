@@ -2,6 +2,7 @@
 
 namespace App\Application\Actions;
 
+use App\Infrastructure\Service\CheckoutBuilder;
 use App\Infrastructure\Service\CheckoutBuilderInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
@@ -19,10 +20,12 @@ class ActionCart extends Action
 
     protected function action(): Response
     {
+        $cartRequest = $this->request->getQueryParams()[CheckoutBuilder::SKUS_PARAM_NAME] ?? '';
+
         return Twig::fromRequest($this->request)->render(
             $this->response,
             'index.html',
-            ['view' => $this->builder->build($this->request)]
+            ['view' => $this->builder->build($cartRequest)]
         );
     }
 }

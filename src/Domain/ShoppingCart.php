@@ -4,6 +4,8 @@ namespace App\Domain;
 
 class ShoppingCart
 {
+    public const SLUG_TEMPLATE = '/cart?skus=%s';
+
     public int $total = 0;
 
     /**
@@ -77,5 +79,18 @@ class ShoppingCart
         $this->updateTotal();
 
         return $this->total;
+    }
+
+    public function getUrlForSku(Sku $sku): string
+    {
+        $slugParts = [$sku->name];
+        foreach ($this->items as $item) {
+            $slugParts = array_merge(
+                $slugParts,
+                array_fill(0, $item->quantity, $item->sku->name)
+            );
+        }
+
+        return sprintf(self::SLUG_TEMPLATE, implode(',', $slugParts));
     }
 }

@@ -27,7 +27,7 @@
                         <li>{{ sku.price / 5}} users included</li>
                         <li>{{ sku.price / 10}} GB of storage</li>
                     </ul>
-                    <a href="/cart?add={{ sku.name }}" type="button" class="btn btn-lg btn-block btn-outline-primary">Add to cart</a>
+                    <a href="{{ view.cart.getUrlForSku(sku) }}" type="button" class="btn btn-lg btn-block btn-outline-primary">Add to cart</a>
                 </div>
             </div>
         {% endfor %}
@@ -60,18 +60,17 @@
             {% endfor %}
             <tr>
                 <td colspan="2" class="text-primary">Total</td>
-                <td class="text-primary">${{ cart.total }}.00</td>
+                <td class="text-primary">${{ view.cart.total }}.00</td>
             </tr>
         </table>
 
         <small class="d-block text-right mt-3">
-            <a type="button" href="/cart">Empty your cart</a>
+            <a type="button" class="btn btn-info" href="/cart">Empty your cart</a>
         </small>
 
     </div>
 
 {% include 'footer.html' %}
-
 
 </div>
 </body>

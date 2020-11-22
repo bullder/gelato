@@ -7,5 +7,5 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 interface CheckoutBuilderInterface
 {
-    public function build(Request $request): Checkout;
+    public function build(string $cartString): Checkout;
 }

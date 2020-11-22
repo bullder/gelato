@@ -18,7 +18,7 @@ class InMemoryDiscountRepository implements DiscountRepository
     public function __construct(array $discounts = null)
     {
         $this->discounts = $discounts ?? [
-                0 => new Discount('3A for $130', 30, new DiscountRule(0, 'A', 3)),
+                0 => new Discount('3A for $130', 20, new DiscountRule(0, 'A', 3)),
                 1 => new Discount('2B for $130', 15, new DiscountRule(0, 'B', 2)),
                 2 => new Discount('$10 of total $200', 10, new DiscountRule(200)),
             ];
