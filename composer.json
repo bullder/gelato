@@ -52,6 +52,7 @@
     },
     "scripts": {
         "start": "php -S localhost:8080 -t public",
-        "test": "phpunit"
+        "test": "phpunit",
+        "phpstan": "vendor/bin/phpstan analyze src/"
     }
 }
