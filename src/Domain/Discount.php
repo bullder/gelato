@@ -15,12 +15,4 @@ class Discount
         $this->amount = $amount;
         $this->rule = $rule;
     }
-
-    public function jsonSerialize()
-    {
-        return [
-            'name' => $this->name,
-            'price' => $this->amount,
-        ];
-    }
 }

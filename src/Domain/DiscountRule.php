@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class DiscountRule implements \JsonSerializable
+class DiscountRule
 {
     public ?string $sku;
     public ?int $quantity;
@@ -13,13 +13,5 @@ class DiscountRule implements \JsonSerializable
         $this->total = $total;
         $this->sku = $sku;
         $this->quantity = $quantity;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'sku' => $this->sku,
-            'quantity' => $this->quantity,
-        ];
     }
 }

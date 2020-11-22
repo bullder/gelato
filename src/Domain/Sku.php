@@ -2,9 +2,7 @@
 
 namespace App\Domain;
 
-use JsonSerializable;
-
-class Sku implements JsonSerializable
+class Sku
 {
     public string $name;
     public int $price;
@@ -12,13 +10,5 @@ class Sku implements JsonSerializable
     public function __construct(string $name, int $price) {
         $this->name = $name;
         $this->price = $price;
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            'name' => $this->name,
-            'price' => $this->price,
-        ];
     }
 }
