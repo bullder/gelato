@@ -9,7 +9,7 @@ class ActionCartTest extends TestCase
     public function testAction()
     {
         $app = $this->getAppInstance();
-        $request = $this->createRequest('GET', '/cart');
+        $request = $this->createRequest('GET', '/');
         $response = $app->handle($request);
 
         $this->assertEquals(200, $response->getStatusCode());
