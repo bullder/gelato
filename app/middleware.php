@@ -11,6 +11,9 @@ return static function (App $app) {
 
     $app->add(TwigMiddleware::create(
         $app,
-        Twig::create('src/templates/', ['cache' => 'var/cache/twig'])
+        Twig::create(
+            __DIR__ . '/../src/templates/',
+            ['cache' => __DIR__ . '/../var/cache/twig']
+        )
     ));
 };
